@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ink.whi.service.article.repo.mapper.ArticleMapper">
+
+    <sql id="limit">
+        <if test="pageParam != null">
+            limit #{pageParam.offset}, #{pageParam.limit}
+        </if>
+    </sql>
+
+    <select id="listArticlesOrderById" resultType="ink.whi.api.model.vo.article.dto.SimpleArticleDTO">
+        select id, title, update_time as createTime from article
+        where id > #{lastId}
+          and status =${@ink.whi.api.model.enums.PushStatusEnum@ONLINE.code}
+          and deleted = ${@ink.whi.api.model.enums.YesOrNoEnum@NO.code}
+        order by id asc limit #{size}
+    </select>
+
+    <select id="listArticlesByReadCounts"
+            resultType="ink.whi.api.model.vo.article.dto.SimpleArticleDTO">
+        select rc.document_id as id, a.title as title, a.create_time as createTime
+        from read_count as rc left join article as a on rc.document_id = a.id
+        where rc.document_type = ${@ink.whi.api.model.enums.DocumentTypeEnum@ARTICLE.code}
+        and a.status = ${@ink.whi.api.model.enums.PushStatusEnum@ONLINE.code}
+        and a.deleted = ${@ink.whi.api.model.enums.YesOrNoEnum@NO.code} order by rc.cnt desc
+        <include refid="limit"/>
+    </select>
+
+    <select id="listArticleByCategoryAndTags"
+            resultType="ink.whi.service.article.repo.entity.ReadCountDO">
+        select DISTINCT(a.id) as documentId, rc.cnt as cnt from article a
+        left join article_tag as t on a.id = t.article_id
+        left join read_count rc on rc.document_id  = a.id
+        where rc.document_type = ${@ink.whi.api.model.enums.DocumentTypeEnum@ARTICLE.code}
+        and a.status = ${@ink.whi.api.model.enums.PushStatusEnum@ONLINE.code}
+        and a.deleted = ${@ink.whi.api.model.enums.YesOrNoEnum@NO.code}
+        <if test="categoryId != null">
+            and a.category_id = #{categoryId}
+        </if>
+        and t.tag_id in
+        <if test="tags != null and tags.size > 0">
+            <foreach collection="tags" item="tagId" open="(" close=")" separator=",">
+                #{tagId}
+            </foreach>
+        </if>
+        order by rc.cnt desc, a.id desc
+        <include refid="limit"/>
+    </select>
+
+    <select id="listArticlesByUserIdOrderByReadCounts"
+            resultType="ink.whi.api.model.vo.article.dto.SimpleArticleDTO">
+        select rc.document_id as id, a.title as title, a.create_time as createTime
+        from read_count as rc left join article as a on rc.document_id = a.id
+        where rc.document_type = ${@ink.whi.api.model.enums.DocumentTypeEnum@ARTICLE.code}
+        and a.status = ${@ink.whi.api.model.enums.PushStatusEnum@ONLINE.code}
+        and a.deleted = ${@ink.whi.api.model.enums.YesOrNoEnum@NO.code} and a.user_id = #{userId} order
+        by rc.cnt desc
+        <include refid="limit"/>
+    </select>
+
+    <select id="listYearArticleByUserId"
+            resultType="ink.whi.api.model.vo.article.dto.YearArticleDTO">
+        select DATE_FORMAT(create_time, "%Y") as year, count(*) as articleCount
+        from article
+        where user_id = #{userId}
+          and status = ${@ink.whi.api.model.enums.PushStatusEnum@ONLINE.code}
+          and deleted = ${@ink.whi.api.model.enums.YesOrNoEnum@NO.code}
+        group by year
+    </select>
+
+</mapper>
