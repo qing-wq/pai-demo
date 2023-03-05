@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("article_tag")
-public class ArticleTag extends BaseDO{
+public class ArticleTagDO extends BaseDO{
     private static final long serialVersionUID = 1L;
 
     /**
