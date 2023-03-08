@@ -1,0 +1,10 @@
+/* 第三方样式 */
+
+@import "IdeaProjects/pai-demo/pai-ui/src/main/resources/static/css/three/bootstrap.min.css";
+
+@import "IdeaProjects/pai-demo/pai-ui/src/main/resources/static/editormd/css/editormd.css";
+
+@import "IdeaProjects/pai-demo/pai-ui/src/main/resources/static/css/three/toastr.min.css";
+
+@import "IdeaProjects/pai-demo/pai-ui/src/main/resources/static/css/three/select2.min.css";
+
