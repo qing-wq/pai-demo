@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ink.whi.service.user.repo.mapper.UserRelationMapper">
+    <sql id="limit">
+        <if test="pageParam != null">
+            limit #{pageParam.offset}, #{pageParam.limit}
+        </if>
+    </sql>
+
+    <!-- 查询用户的关注列表，即follow_user_id是自己   -->
+    <select id="queryUserFollowList" resultType="ink.whi.api.model.vo.user.dto.FollowUserInfoDTO">
+        select u.user_id   as userId,
+               u.user_name as userName,
+               u.photo     as avatar,
+               r.id        as relationId,
+               true        as followed
+        from user_relation r
+                 left join user_info as u on u.user_id = r.user_id
+        where r.follow_user_id = #{followUserId}
+          and r.follow_state = #{@ink.whi.api.model.enums.FollowStateEnum@FOLLOW.code}
+        ORDER BY u.id desc
+        <include refid="limit"/>
+    </select>
+
+    <select id="queryUserFansList" resultType="ink.whi.api.model.vo.user.dto.FollowUserInfoDTO">
+        select u.user_id   as userId,
+               u.user_name as userName,
+               u.photo     as avatar,
+               r.id        as relationId
+        from user_relation r
+                 left join user_info as u on u.user_id = r.user_id
+        where r.follow_user_id = #{userId}
+          and r.follow_state = #{@ink.whi.api.model.enums.FollowStateEnum@FOLLOW.code}
+        ORDER BY u.id desc
+        <include refid="limit"/>
+    </select>
+
+
+</mapper>

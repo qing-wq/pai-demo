@@ -1,15 +1,12 @@
 package ink.whi.service.user.repo.Entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.github.paicoding.forum.api.model.entity.BaseDO;
+import ink.whi.service.article.repo.entity.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
  * 用户足迹表
- *
- * @author louzai
- * @date 2022-07-18
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

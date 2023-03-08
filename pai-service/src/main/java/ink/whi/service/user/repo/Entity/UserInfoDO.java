@@ -3,7 +3,7 @@ package ink.whi.service.user.repo.Entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
-import com.github.paicoding.forum.api.model.entity.BaseDO;
+import ink.whi.service.article.repo.entity.BaseDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -32,7 +32,7 @@ public class UserInfoDO extends BaseDO {
     private String userName;
 
     /**
-     * 用户图像
+     * 用户头像
      */
     private String photo;
 
