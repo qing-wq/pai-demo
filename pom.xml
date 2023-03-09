@@ -7,6 +7,8 @@
         <module>pai-service</module>
         <module>pai-api</module>
         <module>pai-ui</module>
+        <module>pai-web</module>
+        <module>pai-core</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

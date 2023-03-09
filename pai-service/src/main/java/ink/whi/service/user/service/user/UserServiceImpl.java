@@ -1,5 +1,8 @@
 package ink.whi.service.user.service.user;
 
+import ink.whi.api.model.enums.StatusEnum;
+import ink.whi.api.model.exception.ExceptionUtil;
+import ink.whi.api.model.exception.ForumException;
 import ink.whi.api.model.vo.user.UserInfoSaveReq;
 import ink.whi.api.model.vo.user.UserSaveReq;
 import ink.whi.api.model.vo.user.dto.BaseUserInfoDTO;
@@ -28,11 +31,11 @@ public class UserServiceImpl implements UserService {
     public BaseUserInfoDTO passwordLogin(String userName, String password) {
         UserDO user = userDao.getByUserName(userName);
         if (user == null) {
-
+            throw ExceptionUtil.of(StatusEnum.ILLEGAL_ARGUMENTS);
         }
 
         if (!userPwdEncoder.match(password, user.getPassword())) {
-
+            throw ExceptionUtil.of(StatusEnum.USER_PWD_ERROR);
         }
 
         return queryBasicUserInfo(user.getId());
