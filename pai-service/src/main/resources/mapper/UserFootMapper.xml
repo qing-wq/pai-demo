@@ -10,7 +10,7 @@
     <select id="countArticleByArticleId" resultType="ink.whi.api.model.vo.article.dto.ArticleFootCountDTO">
         select
             # 如果praise_stat的值=PRAISE.code的值，则将1加到praiseCount上，否则将0加到praiseCount上
-            # 将需要的数据全部查出来，再按需分类，避免多次查询，非常巧妙
+            # keypoint: 将需要的数据全部查出来，再按需分类，避免多次查询，非常巧妙
             sum(if(f.praise_stat = ${@ink.whi.api.model.enums.DocumentTypeEnum@PRAISE.code}, 1, 0))       as praiseCount,
             sum(if(f.collection_stat = ${@ink.whi.api.model.enums.PraiseStatEnum@COLLECTION.code}, 1,
                    0))                                                                                    as collectionCount,

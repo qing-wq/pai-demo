@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * 标签
+ */
 @Data
 public class TagDTO implements Serializable {
     private static final long serialVersionUID = -8614833588325787479L;

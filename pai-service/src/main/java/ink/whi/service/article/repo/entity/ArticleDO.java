@@ -1,11 +1,15 @@
 package ink.whi.service.article.repo.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import ink.service.article.repo.Enum.PushStatusEnum;
-import ink.service.article.repo.Enum.SourceTypeEnum;
+import ink.whi.api.model.enums.PushStatusEnum;
+import ink.whi.api.model.enums.SourceTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * 文章主要信息，为了方便文章缩略图进行展示，将文章信息拆分为
+ * ArticleDO 和 ArticleDetailDO
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("article")

@@ -51,6 +51,7 @@ public class ForumExceptionHandler {
         String view = getErrorPage(errStatus, resp);
         ModelAndView mv = new ModelAndView(view);
         resp.setContentType(MediaType.TEXT_HTML_VALUE);
+        // todo: SpringUtil GlobalInitService
 //        mv.getModel().put("global", SpringUtil.getBean(GlobalInitService.class).globalAttr());
         mv.getModel().put("res", ResVo.fail(errStatus));
         mv.getModel().put("toast", JsonUtil.toStr(ResVo.fail(errStatus)));
