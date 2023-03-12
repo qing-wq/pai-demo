@@ -40,4 +40,8 @@ public class PageParam {
         pageParam.limit = pageSize;
         return pageParam;
     }
+
+    public static String getLimitSql(PageParam pageParam) {
+        return String.format("limit %s,%s", pageParam.offset, pageParam.limit);
+    }
 }

@@ -3,7 +3,9 @@ package ink.whi.service.article.repo.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import ink.whi.service.article.repo.entity.ArticleDetailDO;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface ArticleDetailMapper extends BaseMapper<ArticleDetailDO> {
 
     @Update("update article_detail set `content` = #{content}," +
